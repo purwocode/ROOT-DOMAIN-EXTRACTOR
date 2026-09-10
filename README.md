@@ -1,7 +1,5 @@
 # Extract Interactive - README
 
-Tool ekstraksi domain root yang interaktif dan mudah digunakan dengan antarmuka berbasis prompt dan progress bar visual. Interactive tool for extracting root domains with easy-to-use prompt interface and visual progress bar.
-
 ---
 
 ## Daftar Isi / Table of Contents
@@ -10,54 +8,87 @@ Tool ekstraksi domain root yang interaktif dan mudah digunakan dengan antarmuka 
 2. [Persyaratan / Requirements](#persyaratan--requirements)
 3. [Instalasi / Installation](#instalasi--installation)
 4. [Cara Menggunakan / How to Use](#cara-menggunakan--how-to-use)
-5. [Contoh Penggunaan / Usage Examples](#contoh-penggunaan--usage-examples)
-6. [Format Input/Output](#format-inputoutput)
-7. [Troubleshooting](#troubleshooting)
-8. [FAQ](#faq)
+5. [Alur Kerja / Step by Step Workflow](#alur-kerja--step-by-step-workflow)
+6. [Contoh Penggunaan / Usage Examples](#contoh-penggunaan--usage-examples)
+7. [Format Input/Output](#format-inputoutput)
+8. [Troubleshooting](#troubleshooting)
+9. [FAQ](#faq)
+10. [Support dan Issues](#support-dan-issues)
+11. [Quick Reference](#quick-reference)
 
 ---
 
 ## Fitur / Features
 
-- Interactive Interface (Antarmuka Interaktif): Prompt untuk input file dan output file
-- Progress Bar: Visual progress bar selama ekstraksi / Progress bar during extraction
-- Subdomain Filtering (Filtering Subdomain): Otomatis filter subdomain, ambil hanya root domain
-- Deduplicator: Hapus duplicate otomatis / Auto remove duplicates
-- Complete Statistics (Statistik Lengkap): Tampilkan statistik ekstraksi
-- Fast (Cepat): Proses < 1ms per domain
-- 99.9% Accurate (Akurat): Menggunakan PSL (Public Suffix List) dengan 10,030 TLD
-- URL Support: Otomatis extract hostname dari URL lengkap
-- Comment Support: Support komentar dengan tanda # / Support comments with # sign
+### Bahasa Indonesia
+
+- **Antarmuka Interaktif**: Prompt otomatis untuk memilih input dan output file
+- **Progress Bar**: Menampilkan progress ekstraksi secara real-time dengan visual progress bar
+- **Filter Subdomain**: Otomatis memfilter subdomain, hanya mengambil root domain saja
+- **Penghapus Duplikat**: Otomatis menghapus duplikat domain dalam hasil
+- **Statistik Lengkap**: Menampilkan statistik detail ekstraksi (input, output, duplikat, subdomain)
+- **Cepat**: Memproses < 1ms per domain
+- **Akurat**: Menggunakan Public Suffix List (PSL) dengan 10,030 TLD dari IANA official
+- **Support URL**: Otomatis mengekstrak hostname dari URL lengkap (termasuk port, path)
+- **Support Komentar**: Mendukung komentar dengan tanda # dan baris kosong
+
+### English
+
+- **Interactive Interface**: Automatic prompts to select input and output files
+- **Progress Bar**: Shows extraction progress in real-time with visual progress bar
+- **Subdomain Filtering**: Automatically filters subdomains, keeps only root domains
+- **Duplicate Remover**: Automatically removes duplicate domains from results
+- **Complete Statistics**: Displays detailed extraction statistics (input, output, duplicates, subdomains)
+- **Fast**: Processes less than 1ms per domain
+- **Accurate**: Uses Public Suffix List (PSL) with 10,030 TLDs from IANA official
+- **URL Support**: Automatically extracts hostname from full URLs (including port, path)
+- **Comment Support**: Supports comments with # sign and empty lines
 
 ---
 
 ## Persyaratan / Requirements
 
-- PHP 7.0 atau lebih tinggi / PHP 7.0 or higher
-- File psl_cache.json (PSL cache - harus ada di folder yang sama)
-- Domain list file (format .txt atau text biasa)
+### Bahasa Indonesia
 
-### Cek PHP Version / Check PHP Version
+- PHP versi 7.0 atau lebih tinggi
+- File psl_cache.json (berisi PSL cache - harus ada di folder yang sama dengan script)
+- File domain list dalam format .txt (satu domain per baris)
 
+Verifikasi instalasi PHP:
 ```bash
 php -v
 ```
 
-Jika PHP belum terinstall, download dari / If PHP not installed, download from [php.net](https://www.php.net/downloads)
+Jika PHP belum terinstall, download dari: [php.net](https://www.php.net/downloads)
+
+### English
+
+- PHP version 7.0 or higher
+- File psl_cache.json (contains PSL cache - must be in the same folder as the script)
+- Domain list file in .txt format (one domain per line)
+
+Verify PHP installation:
+```bash
+php -v
+```
+
+If PHP is not installed, download from: [php.net](https://www.php.net/downloads)
 
 ---
 
 ## Instalasi / Installation
 
-### 1. Setup PSL Cache (First Time Only)
+### Bahasa Indonesia
 
-Jalankan perintah ini sekali untuk membuat psl_cache.json / Run this command once to create psl_cache.json:
+#### Langkah 1: Setup PSL Cache (Hanya Pertama Kali)
+
+Jalankan perintah ini untuk membuat psl_cache.json:
 
 ```bash
 python psl_manager.py
 ```
 
-Output:
+Output yang diharapkan:
 ```
 Downloading PSL from publicsuffix.org...
 Downloaded and cached PSL successfully
@@ -65,34 +96,72 @@ Total suffixes: 10,030
 Cache saved to: psl_cache.json
 ```
 
-### 2. Verifikasi File / Verify Files
+Proses ini memakan waktu 1-2 detik untuk download pertama kali, namun setelah cache tersimpan, script akan berjalan instant.
 
-Pastikan file-file berikut ada di folder d:\scan / Make sure these files exist in d:\scan folder:
+#### Langkah 2: Verifikasi File
+
+Pastikan file-file berikut ada di folder d:\scan:
+
 ```
-extract_interactive.php    (tool utama / main tool)
-psl_cache.json             (PSL data)
+extract_interactive.php    (tool utama)
+psl_cache.json             (data PSL cache)
 ```
+
+Jika psl_cache.json tidak ada, buat dengan menjalankan psl_manager.py seperti di Langkah 1.
+
+### English
+
+#### Step 1: Setup PSL Cache (First Time Only)
+
+Run this command to create psl_cache.json:
+
+```bash
+python psl_manager.py
+```
+
+Expected output:
+```
+Downloading PSL from publicsuffix.org...
+Downloaded and cached PSL successfully
+Total suffixes: 10,030
+Cache saved to: psl_cache.json
+```
+
+This process takes 1-2 seconds for first-time download, but after cache is saved, the script runs instantly.
+
+#### Step 2: Verify Files
+
+Make sure the following files exist in d:\scan folder:
+
+```
+extract_interactive.php    (main tool)
+psl_cache.json             (PSL cache data)
+```
+
+If psl_cache.json doesn't exist, create it by running psl_manager.py as in Step 1.
 
 ---
 
 ## Cara Menggunakan / How to Use
 
-### Method 1: Command Line (Recommended)
+### Bahasa Indonesia
+
+#### Metode 1: Command Line (Direkomendasikan)
 
 ```bash
 cd d:\scan
 php extract_interactive.php
 ```
 
-Atau / Or:
+Atau langsung:
 
 ```bash
 php extract_interactive.php
 ```
 
-### Method 2: Double Click (Windows)
+#### Metode 2: Double Click (Windows)
 
-Buat file batch bernama run_extract.bat / Create batch file named run_extract.bat:
+Buat file batch bernama `run_extract.bat`:
 
 ```batch
 @echo off
@@ -101,13 +170,43 @@ php extract_interactive.php
 pause
 ```
 
-Kemudian double-click run_extract.bat / Then double-click run_extract.bat
+Kemudian double-click file `run_extract.bat` untuk menjalankan tool.
+
+### English
+
+#### Method 1: Command Line (Recommended)
+
+```bash
+cd d:\scan
+php extract_interactive.php
+```
+
+Or directly:
+
+```bash
+php extract_interactive.php
+```
+
+#### Method 2: Double Click (Windows)
+
+Create a batch file named `run_extract.bat`:
+
+```batch
+@echo off
+cd /d d:\scan
+php extract_interactive.php
+pause
+```
+
+Then double-click `run_extract.bat` file to run the tool.
 
 ---
 
 ## Alur Kerja / Step by Step Workflow
 
-### Step 1: Jalankan Program / Run Program
+### Bahasa Indonesia
+
+#### Langkah 1: Jalankan Program
 
 ```bash
 php extract_interactive.php
@@ -116,59 +215,57 @@ php extract_interactive.php
 Output:
 ```
 ========================================================================
-                  Extract Root Domains - Interactive
+                 Extract Root Domains - Interactive
 
-  This tool will extract root domains from your domain list and
-  remove duplicates automatically.
+  Tool ini akan mengekstrak root domain dari domain list Anda
+  dan menghapus duplikat secara otomatis.
 
-  Features:
-    * Filters subdomains (keeps root domains only)
-    * Removes duplicates
-    * Handles URLs (auto-extracts hostname)
-    * Supports comments and empty lines
-    * 99.9% accuracy (10,030 TLDs)
+  Fitur:
+    * Filter subdomain (hanya ambil root domain)
+    * Hapus duplikat otomatis
+    * Support URL (auto-ekstrak hostname)
+    * Support komentar dan baris kosong
+    * Akurasi 99.9% (10,030 TLDs)
 
-  Performance: < 1ms per domain
+  Performa: < 1ms per domain
 ========================================================================
 ```
 
-### Step 2: Input File Prompt
+#### Langkah 2: Input Prompt
 
 ```
 Input domain list file (default: domain.txt):
 ```
 
-Opsi / Options:
-- Tekan ENTER untuk menggunakan default domain.txt / Press ENTER to use default domain.txt
-- Atau ketik nama file lain / Or type another filename, contoh / example: domains.txt, my_list.txt, /path/to/domains.txt
+Opsi:
+- Tekan ENTER untuk menggunakan default `domain.txt`
+- Atau ketik nama file lain: `domains.txt`, `my_list.txt`, `/path/to/domains.txt`
 
-### Step 3: Output File Prompt
+#### Langkah 3: Output Prompt
 
 ```
 Output file (default: Result.txt):
 ```
 
-Opsi / Options:
-- Tekan ENTER untuk menggunakan default Result.txt / Press ENTER to use default Result.txt
-- Atau ketik nama file output lain / Or type another output filename, contoh / example: roots.txt, output.txt
+Opsi:
+- Tekan ENTER untuk menggunakan default `Result.txt`
+- Atau ketik nama file output lain: `roots.txt`, `output.txt`
 
-### Step 4: Processing
+#### Langkah 4: Proses
 
-Program akan memproses domain list Anda / Program will process your domain list:
+Program akan memproses domain list:
 
 ```
 Loading domains from: domain.txt
 Loaded 50 domains
 
 Extracting root domains...
-[] 65.0% (33/50)
+[████████████████░░░░░░░░░░░░░░] 65.0% (33/50)
 ```
 
-Progress bar menunjukkan kemajuan ekstraksi / Progress bar shows extraction progress.
+#### Langkah 5: Hasil
 
-### Step 5: Results Summary
-
-Setelah selesai, akan tampil hasil / After completion, results will be displayed:
+Setelah selesai:
 
 ```
 ========================================================================
@@ -186,26 +283,112 @@ Statistics:
 
 Results saved to: Result.txt
 
-First 10 root domains found:
+First 10 root domains:
    1. example.com
    2. example.co.uk
-   3. example.com.au
-   4. google.com
-   5. github.io
-   6. itb.ac.id
-   7. ui.ac.id
-   8. uii.ac.id
-   9. ulb.ac.id
-   10. user.github.io
+   3. google.com
+   4. itb.ac.id
+   5. ui.ac.id
+   6. github.io
+```
+
+### English
+
+#### Step 1: Run Program
+
+```bash
+php extract_interactive.php
+```
+
+Output:
+```
+========================================================================
+                 Extract Root Domains - Interactive
+
+  This tool will extract root domains from your domain list
+  and remove duplicates automatically.
+
+  Features:
+    * Filter subdomains (keep only root domains)
+    * Auto remove duplicates
+    * URL support (auto-extract hostname)
+    * Comments and empty lines support
+    * 99.9% accuracy (10,030 TLDs)
+
+  Performance: < 1ms per domain
+========================================================================
+```
+
+#### Step 2: Input Prompt
+
+```
+Input domain list file (default: domain.txt):
+```
+
+Options:
+- Press ENTER to use default `domain.txt`
+- Or type another filename: `domains.txt`, `my_list.txt`, `/path/to/domains.txt`
+
+#### Step 3: Output Prompt
+
+```
+Output file (default: Result.txt):
+```
+
+Options:
+- Press ENTER to use default `Result.txt`
+- Or type another output filename: `roots.txt`, `output.txt`
+
+#### Step 4: Processing
+
+Program will process your domain list:
+
+```
+Loading domains from: domain.txt
+Loaded 50 domains
+
+Extracting root domains...
+[████████████████░░░░░░░░░░░░░░] 65.0% (33/50)
+```
+
+#### Step 5: Results
+
+After completion:
+
+```
+========================================================================
+Extraction complete!
+========================================================================
+
+Statistics:
+  Input domains:        50
+  Root domains found:   35
+  Duplicates removed:   2
+  Unique root domains:  33
+  Subdomains filtered:  17
+  Processing time:      0.12s
+  Output file:          Result.txt
+
+Results saved to: Result.txt
+
+First 10 root domains:
+   1. example.com
+   2. example.co.uk
+   3. google.com
+   4. itb.ac.id
+   5. ui.ac.id
+   6. github.io
 ```
 
 ---
 
 ## Contoh Penggunaan / Usage Examples
 
-### Contoh 1: Menggunakan Default Files / Using Default Files
+### Bahasa Indonesia
 
-Input: domain.txt (default)
+#### Contoh 1: Menggunakan Default Files
+
+Input file: `domain.txt`
 ```
 google.com
 api.google.com
@@ -216,30 +399,28 @@ itb.ac.id
 lp3m.itb.ac.id
 ```
 
-Jalankan / Run:
+Jalankan:
 ```bash
 php extract_interactive.php
-# Tekan ENTER dua kali untuk menggunakan default / Press ENTER twice for defaults
+# Tekan ENTER dua kali untuk default files
 ```
 
-Output: Result.txt
+Output: `Result.txt`
 ```
 example.co.uk
 google.com
 itb.ac.id
 ```
 
-Statistik / Statistics:
+Statistik:
 - Input: 7 domains
 - Root: 3 domains
-- Subdomain filtered: 4
-- Duplicates removed: 0
+- Subdomain dihapus: 4
+- Duplikat dihapus: 0
 
----
+#### Contoh 2: Custom Input dan Output
 
-### Contoh 2: Custom Input dan Output Files / Custom Input and Output Files
-
-Jalankan / Run:
+Jalankan:
 ```bash
 php extract_interactive.php
 ```
@@ -254,20 +435,82 @@ Prompt 2:
 Output file (default: Result.txt): unique_roots.txt
 ```
 
-Hasil / Result:
-- Membaca dari / Reading from: discovered.txt
-- Menyimpan ke / Saving to: unique_roots.txt
+Program akan membaca dari `discovered.txt` dan menyimpan ke `unique_roots.txt`.
 
----
+#### Contoh 3: Full Path
 
-### Contoh 3: Full Path Input
-
-Jalankan / Run:
+Jalankan:
 ```bash
 php extract_interactive.php
 ```
 
-Prompt:
+Input:
+```
+Input domain list file (default: domain.txt): /path/to/subfinder_results.txt
+Output file (default: Result.txt): /output/roots_2026_09_10.txt
+```
+
+### English
+
+#### Example 1: Using Default Files
+
+Input file: `domain.txt`
+```
+google.com
+api.google.com
+mail.google.com
+example.co.uk
+api.example.co.uk
+itb.ac.id
+lp3m.itb.ac.id
+```
+
+Run:
+```bash
+php extract_interactive.php
+# Press ENTER twice for default files
+```
+
+Output: `Result.txt`
+```
+example.co.uk
+google.com
+itb.ac.id
+```
+
+Statistics:
+- Input: 7 domains
+- Root: 3 domains
+- Subdomains removed: 4
+- Duplicates removed: 0
+
+#### Example 2: Custom Input and Output
+
+Run:
+```bash
+php extract_interactive.php
+```
+
+Prompt 1:
+```
+Input domain list file (default: domain.txt): discovered.txt
+```
+
+Prompt 2:
+```
+Output file (default: Result.txt): unique_roots.txt
+```
+
+Program will read from `discovered.txt` and save to `unique_roots.txt`.
+
+#### Example 3: Full Path
+
+Run:
+```bash
+php extract_interactive.php
+```
+
+Input:
 ```
 Input domain list file (default: domain.txt): /path/to/subfinder_results.txt
 Output file (default: Result.txt): /output/roots_2026_09_10.txt
@@ -277,34 +520,112 @@ Output file (default: Result.txt): /output/roots_2026_09_10.txt
 
 ## Format Input/Output
 
-### Format Input (domain.txt)
+### Bahasa Indonesia
 
-Setiap baris dapat berisi / Each line can contain:
+#### Format Input (domain.txt)
 
-#### 1. Plain Domain
+Setiap baris dapat berisi:
+
+**1. Plain Domain**
 ```
 google.com
 example.co.uk
 itb.ac.id
 ```
 
-#### 2. Subdomain (akan di-filter / will be filtered)
+**2. Subdomain (akan difilter)**
 ```
 api.google.com
 mail.example.co.uk
 lp3m.itb.ac.id
 ```
 
-#### 3. Full URL (hostname auto-extracted / auto-extracted)
+**3. Full URL (hostname auto-ekstrak)**
 ```
 http://google.com
 https://api.example.co.uk/path
 https://example.com:8080/admin
 ```
 
-#### 4. Comments
+**4. Komentar**
 ```
-# This is a comment / Ini adalah komentar
+# Ini adalah komentar
+google.com  # Domain Google
+
+example.com
+# Subdomain (akan difilter)
+api.example.com
+```
+
+**5. Baris Kosong (diabaikan)**
+```
+google.com
+
+example.com
+
+api.example.com
+```
+
+**6. Format Campuran**
+```
+google.com
+https://api.google.com/search
+example.co.uk
+# Universitas Indonesia
+itb.ac.id
+lp3m.itb.ac.id
+
+mail.example.com:25
+```
+
+#### Format Output (Result.txt)
+
+- Satu domain per baris
+- Diurutkan secara alfabet
+- Tanpa duplikat
+- Encoding UTF-8
+- Hanya root domain (subdomain dihapus)
+
+Contoh Output:
+```
+example.co.uk
+example.com
+google.com
+itb.ac.id
+uii.ac.id
+ui.ac.id
+```
+
+### English
+
+#### Input Format (domain.txt)
+
+Each line can contain:
+
+**1. Plain Domain**
+```
+google.com
+example.co.uk
+itb.ac.id
+```
+
+**2. Subdomain (will be filtered)**
+```
+api.google.com
+mail.example.co.uk
+lp3m.itb.ac.id
+```
+
+**3. Full URL (hostname auto-extracted)**
+```
+http://google.com
+https://api.example.co.uk/path
+https://example.com:8080/admin
+```
+
+**4. Comments**
+```
+# This is a comment
 google.com  # Google domain
 
 example.com
@@ -312,7 +633,7 @@ example.com
 api.example.com
 ```
 
-#### 5. Empty Lines (ignored / diabaikan)
+**5. Empty Lines (ignored)**
 ```
 google.com
 
@@ -321,306 +642,311 @@ example.com
 api.example.com
 ```
 
-#### 6. Mixed Format
+**6. Mixed Format**
 ```
 google.com
 https://api.google.com/search
 example.co.uk
-# Indonesian university / universitas Indonesia
+# Indonesian university
 itb.ac.id
 lp3m.itb.ac.id
 
 mail.example.com:25
 ```
 
-### Format Output (Result.txt)
+#### Output Format (Result.txt)
 
-- Satu domain per baris / One domain per line
-- Sorted alphabetically / Diurutkan secara alfabet
-- No duplicates / Tanpa duplikat
+- One domain per line
+- Sorted alphabetically
+- No duplicates
 - UTF-8 encoding
-- Root domains only / Hanya root domain (subdomains removed / subdomain dihapus)
+- Only root domains (subdomains removed)
 
-Contoh Output / Example Output:
+Example Output:
 ```
 example.co.uk
 example.com
 google.com
 itb.ac.id
 uii.ac.id
-user.github.io
-```
-
----
-
-## Progress Display
-
-### Progress Bar
-
-Menunjukkan kemajuan real-time / Shows real-time progress:
-
-```
-[] 65.0% (33/50)
-```
-
-- Filled bars (): Domains yang sudah diproses / Processed domains
-- Empty bars (): Domains yang belum diproses / Unprocessed domains
-- Percentage: Persentase progress / Progress percentage
-- Count: (processed/total)
-
-### Statistics Table
-
-```
-========================================================================
-Extraction complete!
-========================================================================
-
-Statistics:
-  Input domains:        100
-  Root domains found:   65
-  Duplicates removed:   5
-  Unique root domains:  60
-  Subdomains filtered:  35
-  Processing time:      0.24s
-  Output file:          Result.txt
+ui.ac.id
 ```
 
 ---
 
 ## Troubleshooting
 
-### Error 1: psl_cache.json not found
+### Bahasa Indonesia
+
+#### Error 1: psl_cache.json not found
 
 ```
 Error: psl_cache.json not found. Please run psl_manager.py first.
 ```
 
-Solusi / Solution:
+Solusi:
 ```bash
 python psl_manager.py
 ```
 
-Tunggu sampai cache siap / Wait until cache is ready (1-2 detik / seconds).
+Tunggu cache siap (1-2 detik untuk download pertama).
 
----
-
-### Error 2: Input file not found
+#### Error 2: Input file not found
 
 ```
 Error: Input file 'domain.txt' not found
 ```
 
-Solusi / Solution:
-- Pastikan file domain.txt ada di folder d:\scan / Make sure domain.txt exists in d:\scan folder
-- Atau gunakan full path / Or use full path: /path/to/domain.txt
-- Verifikasi nama file (case-sensitive di Linux/Mac / case-sensitive on Linux/Mac)
+Solusi:
+- Pastikan file domain.txt ada di folder d:\scan
+- Gunakan full path jika file di folder lain: `/path/to/domain.txt`
+- Cek nama file (case-sensitive di Linux/Mac)
 
----
-
-### Error 3: PHP not found
+#### Error 3: PHP not found
 
 ```
 'php' is not recognized as an internal or external command
 ```
 
-Solusi / Solution:
-- Install PHP dari / from [php.net](https://www.php.net/downloads)
-- Atau gunakan full path / Or use full path: C:\Program Files\PHP\php.exe extract_interactive.php
-- Atau tambahkan PHP ke PATH environment variable / Or add PHP to PATH environment variable
+Solusi:
+- Install PHP dari [php.net](https://www.php.net/downloads)
+- Gunakan full path: `C:\Program Files\PHP\php.exe extract_interactive.php`
+- Tambahkan PHP ke PATH environment variable
 
----
-
-### Error 4: Permission denied
+#### Error 4: Permission denied
 
 ```
 Permission denied: Cannot write to Result.txt
 ```
 
-Solusi / Solution:
-- Ganti nama output file / Change output filename
-- Jalankan dengan administrator privileges / Run with administrator privileges
-- Cek permission folder / Check folder permissions: icacls d:\scan
+Solusi:
+- Ganti nama output file
+- Jalankan dengan administrator privileges
+- Cek folder permissions: `icacls d:\scan`
 
----
+#### Error 5: Out of memory
 
-### Error 5: Out of memory
+Jika memproses file sangat besar (>100,000 domains):
 
-Jika memproses file sangat besar (>100,000 domains) / If processing very large file (>100,000 domains):
-
-Solusi / Solution:
-Buka extract_interactive.php dan ubah ini / Open extract_interactive.php and change this:
+Solusi:
+Buka `extract_interactive.php` dan ubah:
 
 ```php
-// Cari baris ini dan ubah nilainya / Find this line and change value:
-ini_set('memory_limit', '256M');  // Ubah ke 512M atau lebih / Change to 512M or more
+ini_set('memory_limit', '256M');  // Ubah ke 512M atau lebih
+```
+
+### English
+
+#### Error 1: psl_cache.json not found
+
+```
+Error: psl_cache.json not found. Please run psl_manager.py first.
+```
+
+Solution:
+```bash
+python psl_manager.py
+```
+
+Wait for cache to be ready (1-2 seconds for first download).
+
+#### Error 2: Input file not found
+
+```
+Error: Input file 'domain.txt' not found
+```
+
+Solution:
+- Make sure domain.txt exists in d:\scan folder
+- Use full path if file is in different folder: `/path/to/domain.txt`
+- Check filename (case-sensitive on Linux/Mac)
+
+#### Error 3: PHP not found
+
+```
+'php' is not recognized as an internal or external command
+```
+
+Solution:
+- Install PHP from [php.net](https://www.php.net/downloads)
+- Use full path: `C:\Program Files\PHP\php.exe extract_interactive.php`
+- Add PHP to PATH environment variable
+
+#### Error 4: Permission denied
+
+```
+Permission denied: Cannot write to Result.txt
+```
+
+Solution:
+- Change output filename
+- Run with administrator privileges
+- Check folder permissions: `icacls d:\scan`
+
+#### Error 5: Out of memory
+
+If processing very large file (>100,000 domains):
+
+Solution:
+Open `extract_interactive.php` and change:
+
+```php
+ini_set('memory_limit', '256M');  // Change to 512M or more
 ```
 
 ---
 
 ## FAQ
 
-### Q1: Berapa lama proses ekstraksi? / How long does it take?
+### Bahasa Indonesia
 
-A: Sangat cepat / Very fast! Kurang dari 1ms per domain / Less than 1ms per domain.
-- 1,000 domain: < 1 detik / second
-- 10,000 domain: < 5 detik / seconds
-- 100,000 domain: < 30 detik / seconds
+**Q1: Berapa lama proses ekstraksi?**
 
----
+A: Sangat cepat! Kurang dari 1ms per domain.
+- 1,000 domain: < 1 detik
+- 10,000 domain: < 5 detik
+- 100,000 domain: < 30 detik
 
-### Q2: Bisakah saya pakai file dengan format berbeda? / Can I use different file formats?
+**Q2: Bisakah saya pakai file dengan format berbeda (.csv, .json)?**
 
-A: Tool ini hanya support .txt / This tool only supports .txt. Untuk format lain, konversi ke .txt terlebih dahulu / For other formats, convert to .txt first (satu domain per baris / one domain per line).
+A: Tool ini hanya support .txt. Untuk format lain, konversi ke .txt terlebih dahulu (satu domain per baris).
 
----
+**Q3: Bagaimana cara handle URL dengan port?**
 
-### Q3: Bagaimana cara handle URL dengan port? / How to handle URL with port?
-
-A: Tool otomatis mengextract hostname dari URL / Tool automatically extracts hostname from URL:
+A: Tool otomatis mengekstrak hostname dari URL:
 ```
 Input:  https://example.com:8080/path
 Output: example.com
 ```
 
----
+**Q4: Apa itu "duplicate"?**
 
-### Q4: Apa itu "duplicate"? / What is duplicate?
-
-A: Domain yang muncul lebih dari 1x dalam input / Domain appearing more than once in input.
+A: Domain yang muncul lebih dari 1x dalam input.
 ```
 Input:  google.com, api.google.com, google.com, mail.google.com
-Output: google.com (duplicate google.com dihapus / removed)
+Output: google.com (duplicate google.com dihapus)
 ```
 
----
-
-### Q5: Apa bedanya Root Domain vs Subdomain? / Difference between Root Domain and Subdomain?
+**Q5: Apa bedanya Root Domain vs Subdomain?**
 
 A:
 - Root Domain: google.com, example.co.uk, itb.ac.id
 - Subdomain: api.google.com, mail.example.co.uk, lp3m.itb.ac.id
 
-Tool ini hanya ambil root domain, filter subdomain / This tool only keeps root domains, filters subdomains.
-
----
-
-### Q6: Akurasi berapa persen? / What is the accuracy?
-
-A: 99.9% accuracy dengan 10,030 TLDs dari Public Suffix List (IANA official) / 99.9% accuracy with 10,030 TLDs from IANA official PSL.
-
-Ini adalah accuracy level yang sama seperti ZTOOLS dan browser vendors / This is same accuracy level as ZTOOLS and browser vendors.
-
----
-
-### Q7: Bisa diintegrasikan dengan tool lain? / Can it be integrated with other tools?
-
-A: Bisa / Yes! Contoh / Example:
-```bash
-subfinder -d target.com | php extract_batch.php /dev/stdin roots.txt
-```
-
-Atau gunakan extract_batch.php untuk mode non-interactive / Or use extract_batch.php for non-interactive mode.
-
----
-
-### Q8: Secure? Data saya teramankan? / Is it secure? Is my data safe?
-
-A:
-- Tidak ada koneksi internet / No internet connection (setelah PSL cache siap / after PSL cache ready)
-- Data hanya disimpan di file lokal / Data only stored in local files
-- No logging ke server / No server logging
-- Semua proses offline / All processes offline
-
----
-
-### Q9: Support Linux/Mac? / Does it support Linux/Mac?
-
-A: Ya / Yes! Bekerja di semua platform yang support PHP 7.0+ / Works on all platforms supporting PHP 7.0+:
-- Windows (PowerShell, CMD)
-- Linux (bash, zsh)
-- macOS (bash, zsh)
-
-Hanya perlu ubah path separator / Only need to change path separators:
-```bash
-# Windows
-php extract_interactive.php
-
-# Linux/Mac
-php extract_interactive.php
-```
-
----
-
-### Q10: Bagaimana update ke versi terbaru? / How to update to latest version?
-
-A: Download versi terbaru dan replace file / Download latest version and replace file:
-```bash
-cp extract_interactive.php extract_interactive.php.backup
-# Download version terbaru / Download latest version
-cp new_extract_interactive.php extract_interactive.php
-```
-
-### Q5: Apa bedanya Root Domain vs Subdomain?
-
-**A:** 
-- **Root Domain**: `google.com`, `example.co.uk`, `itb.ac.id`
-- **Subdomain**: `api.google.com`, `mail.example.co.uk`, `lp3m.itb.ac.id`
-
 Tool ini hanya ambil root domain, filter subdomain.
 
-### Q6: Akurasi berapa persen?
+**Q6: Akurasi berapa persen?**
 
-**A:** **99.9%** accuracy dengan 10,030 TLDs dari Public Suffix List (IANA official).
+A: 99.9% accuracy dengan 10,030 TLDs dari Public Suffix List (IANA official).
 
-Ini adalah accuracy level yang sama seperti ZTOOLS dan browser vendors.
+**Q7: Bisa diintegrasikan dengan tool lain?**
 
-### Q7: Bisa diintegrasikan dengan tool lain?
-
-**A:** Bisa! Contoh:
+A: Bisa! Contoh:
 ```bash
 subfinder -d target.com | php extract_batch.php /dev/stdin roots.txt
 ```
 
-Atau gunakan `extract_batch.php` untuk mode non-interactive.
+**Q8: Secure? Data saya teramankan?**
 
-### Q8: Secure? Data saya teramankan?
+A:
+- Tidak ada koneksi internet (setelah PSL cache siap)
+- Data hanya disimpan di file lokal
+- No logging ke server
+- Semua proses offline
 
-**A:** 
--  Tidak ada koneksi internet (setelah PSL cache siap)
--  Data hanya disimpan di file lokal
--  No logging ke server
--  Semua proses offline
+**Q9: Support Linux/Mac?**
 
-### Q9: Support Linux/Mac?
-
-**A:** Ya! Bekerja di semua platform yang support PHP 7.0+:
+A: Ya! Bekerja di semua platform yang support PHP 7.0+:
 - Windows (PowerShell, CMD)
 - Linux (bash, zsh)
 - macOS (bash, zsh)
 
-Hanya perlu ubah path separator:
-```bash
-# Windows
-php extract_interactive.php
+**Q10: Bagaimana update ke versi terbaru?**
 
-# Linux/Mac
-php extract_interactive.php
-```
-
-### Q10: Bagaimana update ke versi terbaru?
-
-**A:** Download versi terbaru dan replace file:
+A: Download versi terbaru dan replace file:
 ```bash
 cp extract_interactive.php extract_interactive.php.backup
-# Download version terbaru
+cp new_extract_interactive.php extract_interactive.php
+```
+
+### English
+
+**Q1: How long does the extraction process take?**
+
+A: Very fast! Less than 1ms per domain.
+- 1,000 domains: < 1 second
+- 10,000 domains: < 5 seconds
+- 100,000 domains: < 30 seconds
+
+**Q2: Can I use file with different format (.csv, .json)?**
+
+A: This tool only supports .txt. For other formats, convert to .txt first (one domain per line).
+
+**Q3: How to handle URL with port?**
+
+A: Tool automatically extracts hostname from URL:
+```
+Input:  https://example.com:8080/path
+Output: example.com
+```
+
+**Q4: What is "duplicate"?**
+
+A: Domain appearing more than once in input.
+```
+Input:  google.com, api.google.com, google.com, mail.google.com
+Output: google.com (duplicate google.com removed)
+```
+
+**Q5: What is the difference between Root Domain and Subdomain?**
+
+A:
+- Root Domain: google.com, example.co.uk, itb.ac.id
+- Subdomain: api.google.com, mail.example.co.uk, lp3m.itb.ac.id
+
+Tool only keeps root domains, filters subdomains.
+
+**Q6: What is the accuracy?**
+
+A: 99.9% accuracy with 10,030 TLDs from Public Suffix List (IANA official).
+
+**Q7: Can it be integrated with other tools?**
+
+A: Yes! Example:
+```bash
+subfinder -d target.com | php extract_batch.php /dev/stdin roots.txt
+```
+
+**Q8: Is it secure? Is my data safe?**
+
+A:
+- No internet connection (after PSL cache ready)
+- Data only stored in local files
+- No server logging
+- All processes offline
+
+**Q9: Does it support Linux/Mac?**
+
+A: Yes! Works on all platforms supporting PHP 7.0+:
+- Windows (PowerShell, CMD)
+- Linux (bash, zsh)
+- macOS (bash, zsh)
+
+**Q10: How to update to latest version?**
+
+A: Download latest version and replace file:
+```bash
+cp extract_interactive.php extract_interactive.php.backup
 cp new_extract_interactive.php extract_interactive.php
 ```
 
 ---
 
-##  Support & Issues
+## Support dan Issues
 
-### Jika ada error:
+### Bahasa Indonesia
+
+Jika ada error:
 
 1. **Cek versi PHP**:
    ```bash
@@ -635,109 +961,80 @@ cp new_extract_interactive.php extract_interactive.php
 3. **Test dengan sample file**:
    ```bash
    php extract_interactive.php
-   # Input: file_test/test_domains.txt
-   # Output: test_result.txt
+   # Input: domain.txt
+   # Output: Result.txt
    ```
 
-4. **Lihat dokumentasi lengkap**:
-   - `EXTRACT_MODES_GUIDE.txt` - Perbandingan 3 mode
-   - `EXTRACT_PHP_DOCUMENTATION.txt` - Dokumentasi teknis
-   - `QUICK_START.txt` - Quick reference
+### English
 
----
+If there is an error:
 
-##  Quick Reference
-
-### Default Files
-- **Input**: `domain.txt`
-- **Output**: `Result.txt`
-
-### Shortcuts
-- Press ENTER → Use default
-- Type filename → Use custom file
-- Ctrl+C → Cancel program
-
-### Common Usage
-```bash
-# Default files
-php extract_interactive.php
-
-# Custom files via prompts
-php extract_interactive.php
-# Input: my_domains.txt
-# Output: my_roots.txt
-
-# Batch mode (non-interactive)
-php extract_batch.php input.txt output.txt
-
-# Windows batch
-extract_domains.bat
-```
-
----
-
-##  Contoh Case Study
-
-### Skenario: Security Reconnaissance
-
-**Langkah 1:** Discover subdomains
-```bash
-subfinder -d target.com -o all_subs.txt
-# Result: 500 subdomains ditemukan
-```
-
-**Langkah 2:** Extract root domains
-```bash
-php extract_interactive.php
-# Input: all_subs.txt
-# Output: roots_only.txt
-# Result: 50 unique root domains
-```
-
-**Langkah 3:** Scan vulnerabilities
-```bash
-python scan.py --file roots_only.txt
-# Result: Lebih cepat 10x, hasil lebih clean
-```
-
-**Benefit:**
-- 10x lebih cepat scanning
-- Tidak ada duplicate findings
-- Cleaner result report
-
----
-
-##  Performance Tips
-
-1. **Gunakan batch mode untuk banyak file**:
+1. **Check PHP version**:
    ```bash
-   php extract_batch.php large_list.txt
+   php -v
    ```
 
-2. **Pipe output ke file besar**:
+2. **Verify PSL cache file**:
    ```bash
-   php extract_batch.php input.txt > output.txt
+   php -r "echo json_encode(json_decode(file_get_contents('psl_cache.json'))) ? 'OK' : 'ERROR';"
    ```
 
-3. **Process sambil editing**:
-   - Terminal 1: `php extract_interactive.php`
-   - Terminal 2: `tail -f Result.txt`
+3. **Test with sample file**:
+   ```bash
+   php extract_interactive.php
+   # Input: domain.txt
+   # Output: Result.txt
+   ```
 
 ---
 
-##  Version
+## Quick Reference
 
-- **Version**: 1.0
-- **Last Updated**: 2026-09-10
-- **PHP Requirement**: 7.0+
-- **Accuracy**: 99.9% (10,030 TLDs)
+### Bahasa Indonesia
+
+**Default Files**
+- Input: domain.txt
+- Output: Result.txt
+
+**Shortcut**
+- Tekan ENTER: Gunakan default
+- Ketik filename: Gunakan custom file
+- Ctrl+C: Batalkan program
+
+**Common Usage**
+```bash
+php extract_interactive.php
+```
+
+### English
+
+**Default Files**
+- Input: domain.txt
+- Output: Result.txt
+
+**Shortcut**
+- Press ENTER: Use default
+- Type filename: Use custom file
+- Ctrl+C: Cancel program
+
+**Common Usage**
+```bash
+php extract_interactive.php
+```
 
 ---
 
-##  License
+## Version
+
+- Version: 1.0
+- Last Updated: 2026-09-10
+- PHP Requirement: 7.0+
+- Accuracy: 99.9% (10,030 TLDs)
+
+---
+
+## License
 
 Untuk penggunaan dalam project security/pentest. Gunakan sesuai dengan legal dan ethical guidelines.
 
----
-
-**Happy domain extraction! **
+For use in security/pentest projects. Use according to legal and ethical guidelines.
